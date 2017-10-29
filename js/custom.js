@@ -140,8 +140,16 @@
         });    
         
         $('#lStop').on('click',function(){
-            connection.leave();
-        });    
+
+            // stop all local cameras
+            connection.attachStreams.forEach(function(localStream) {
+                localStream.stop();
+            });
+        
+            // close socket.io connection
+            connection.close();
+            
+        });   
         
         $('#videos-remote-multi').on('click','.media-container',function(){
             $('#videos-remote-multi .media-container.main').removeClass('main');
